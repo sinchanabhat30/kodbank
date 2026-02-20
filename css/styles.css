@@ -1,32 +1,42 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 :root {
-    --bg-dark: #0f1115;
-    --card-bg: rgba(23, 25, 30, 0.7);
-    --card-border: rgba(255, 255, 255, 0.08);
-    --text-primary: #ffffff;
-    --text-secondary: #94a3b8;
-    --accent-color: #3b82f6;
-    --accent-glow: rgba(59, 130, 246, 0.4);
-    --accent-hover: #2563eb;
-    --input-bg: rgba(15, 17, 21, 0.6);
-    --input-border: rgba(255, 255, 255, 0.12);
-    --input-focus: #3b82f6;
-    --error-color: #ef4444;
+    --bg-main: linear-gradient(to right, rgba(240, 244, 248, 0.7), rgba(217, 226, 236, 0.7));
+    /* Semi-transparent overlay to ensure text remains professional and readable */
+    --bg-image: url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=1920&auto=format&fit=crop');
+    /* Modern retail bank interior placeholder image */
+    --bg-blur: 3px;
+    /* Simply change this pixel value to adjust the background blur later */
+    --card-bg: #FFFFFF;
+    --card-border: rgba(0, 0, 0, 0.05);
+    --text-heading: #333333;
+    --text-primary: #333333;
+    --text-secondary: #666666;
+
+    --primary-color: #4CAF50;
+    --primary-hover: #45A049;
+
+    --secondary-color: #2196F3;
+    --secondary-hover: #1976D2;
+
+    --input-bg: #FFFFFF;
+    --input-border: #E0E0E0;
+    --input-focus: #4CAF50;
+
+    --error-color: #FF4C4C;
+    --balance-highlight: #FFC107;
 }
 
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
 body {
-    background-color: var(--bg-dark);
-    background-image: 
-        radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.15), transparent 25%),
-        radial-gradient(circle at 85% 30%, rgba(139, 92, 246, 0.15), transparent 25%);
+    background-color: #f0f4f8;
+    /* Base fallback */
     color: var(--text-primary);
     min-height: 100vh;
     display: flex;
@@ -36,16 +46,43 @@ body {
     overflow-x: hidden;
 }
 
+/* Background Image Layer with Blur */
+body::before {
+    content: '';
+    position: fixed;
+    top: -5%;
+    left: -5%;
+    width: 110%;
+    /* Makes image slightly larger so soft edges from blur do not bleed into the viewport */
+    height: 110%;
+    background-image: var(--bg-image);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: blur(var(--bg-blur));
+    z-index: -2;
+}
+
+/* Soft overlay tint on top of the image to ensure the UI design maintains its professional neutrality */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--bg-main);
+    z-index: -1;
+}
+
 .container {
     width: 100%;
     max-width: 420px;
     padding: 2.5rem;
     background: var(--card-bg);
-    border-radius: 24px;
+    border-radius: 12px;
     border: 1px solid var(--card-border);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 40px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transform: translateY(20px);
     opacity: 0;
     animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -58,8 +95,15 @@ body {
 }
 
 @keyframes slideUp {
-    0% { transform: translateY(20px); opacity: 0; }
-    100% { transform: translateY(0); opacity: 1; }
+    0% {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 .header {
@@ -67,13 +111,15 @@ body {
     margin-bottom: 2rem;
 }
 
+.header h1,
+h2 {
+    color: var(--text-heading);
+}
+
 .header h1 {
     font-size: 2rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
-    background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
 }
 
 .header p {
@@ -84,6 +130,7 @@ body {
 .form-group {
     margin-bottom: 1.25rem;
     position: relative;
+    text-align: left;
 }
 
 .form-group label {
@@ -108,33 +155,33 @@ body {
 
 .form-group input:focus {
     border-color: var(--input-focus);
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.15);
 }
 
 .form-group input[readonly] {
-    opacity: 0.7;
+    background-color: #f5f5f5;
     cursor: not-allowed;
 }
 
 .btn {
     width: 100%;
     padding: 1rem;
-    background: var(--accent-color);
+    background: var(--primary-color);
     color: white;
     border: none;
     border-radius: 12px;
     font-size: 1.05rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
     margin-top: 1rem;
-    box-shadow: 0 4px 15px var(--accent-glow);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .btn:hover {
-    background: var(--accent-hover);
+    background: var(--primary-hover);
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px var(--accent-glow);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .btn:active {
@@ -149,14 +196,14 @@ body {
 }
 
 .footer-link a {
-    color: var(--accent-color);
+    color: var(--secondary-color);
     text-decoration: none;
     font-weight: 500;
     transition: color 0.3s ease;
 }
 
 .footer-link a:hover {
-    color: #60a5fa;
+    color: var(--secondary-hover);
     text-decoration: underline;
 }
 
@@ -170,9 +217,9 @@ body {
 
 /* Dashboard Specifics */
 .balance-card {
-    background: rgba(59, 130, 246, 0.1);
-    border: 1px solid rgba(59, 130, 246, 0.2);
-    border-radius: 16px;
+    background: rgba(255, 193, 7, 0.1);
+    border: 1px solid rgba(255, 193, 7, 0.3);
+    border-radius: 12px;
     padding: 2rem;
     margin: 2rem 0;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -187,9 +234,19 @@ body {
 }
 
 @keyframes popIn {
-    0% { opacity: 0; transform: scale(0.9); }
-    70% { transform: scale(1.02); }
-    100% { opacity: 1; transform: scale(1); }
+    0% {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    70% {
+        transform: scale(1.02);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 .balance-label {
@@ -203,8 +260,8 @@ body {
 .balance-amount {
     font-size: 3rem;
     font-weight: 700;
-    color: var(--text-primary);
-    text-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+    color: var(--balance-highlight);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .dashboard-nav {
@@ -217,14 +274,15 @@ body {
 }
 
 .dashboard-nav a {
-    color: var(--text-secondary);
+    color: var(--secondary-color);
     text-decoration: none;
+    font-weight: 500;
     font-size: 0.9rem;
     transition: color 0.3s ease;
 }
 
 .dashboard-nav a:hover {
-    color: var(--text-primary);
+    color: var(--secondary-hover);
 }
 
 /* Confetti canvas */

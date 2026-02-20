@@ -48,7 +48,13 @@ document.addEventListener('DOMContentLoaded', () => {
 function triggerConfetti() {
     var duration = 3000;
     var animationEnd = Date.now() + duration;
-    var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+    var defaults = {
+        startVelocity: 30,
+        spread: 360,
+        ticks: 60,
+        zIndex: 0,
+        colors: ['#FF595E', '#FFCA3A', '#8AC926', '#1982C4', '#6A4C93']
+    };
 
     function randomInRange(min, max) {
         return Math.random() * (max - min) + min;
