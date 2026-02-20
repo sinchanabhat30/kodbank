@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KodBank | Dashboard</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Canvas Confetti CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+
+<body>
+    <div class="container dashboard-container">
+        <div class="dashboard-nav">
+            <h2 style="color: var(--text-secondary); font-size: 1.2rem;">My Dashboard</h2>
+            <a href="#" id="logoutBtn">Logout</a>
+        </div>
+        <div class="header" style="margin-bottom: 3rem;">
+            <h1 id="welcomeUser" style="font-size: 2.5rem;">Welcome, User</h1>
+            <p>Manage your funds securely and beautifully.</p>
+        </div>
+
+        <button id="checkBalanceBtn" class="btn" style="max-width: 250px; margin: 0 auto; display: block;">Check
+            Balance</button>
+
+        <div id="balanceCard" class="balance-card">
+            <div class="balance-label">Your Current Balance Is</div>
+            <div id="balanceDisplay" class="balance-amount">$0.00</div>
+        </div>
+    </div>
+    <script src="js/dashboard.js"></script>
+</body>
+
+</html>
