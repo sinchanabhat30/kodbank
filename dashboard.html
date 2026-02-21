@@ -5,31 +5,951 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KodBank | Dashboard</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Canvas Confetti CDN -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        /* ─── CSS Variables (matches sinchanabhat30.github.io/kodbank theme) ─── */
+        :root {
+            --primary:       #C5A165;
+            --primary-dark:  #A98448;
+            --primary-mid:   #D5B47B;
+            --accent:        #C5A165;
+            --accent-light:  #E0C48A;
+            --gold:          #C5A165;
+            --gold-light:    #E0C48A;
+            --success:       #5A9B6E;
+            --danger:        #D96C6C;
+            --bg:            #FDFCF9;
+            --card-bg:       rgba(255,255,255,0.55);
+            --text-primary:  #262422;
+            --text-secondary:#4A4643;
+            --text-muted:    #857E78;
+            --border:        rgba(255,255,255,0.6);
+            --shadow-sm:     0 4px 12px rgba(0,0,0,0.04);
+            --shadow-md:     0 25px 50px rgba(0,0,0,0.06), 0 10px 20px rgba(0,0,0,0.03);
+            --shadow-lg:     0 15px 35px rgba(197,161,101,0.12), 0 5px 15px rgba(0,0,0,0.05);
+            --radius:        20px;
+            --radius-sm:     14px;
+        }
+
+        /* ─── Reset & Base ─── */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #F5EFEB;
+            background-image:
+                radial-gradient(ellipse at 20% 50%, rgba(197,161,101,0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(197,161,101,0.06) 0%, transparent 50%),
+                url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1920&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(160deg,
+                rgba(253,252,249,0.88) 0%,
+                rgba(245,239,235,0.82) 50%,
+                rgba(253,252,249,0.88) 100%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        nav, main { position: relative; z-index: 1; }
+
+        /* ─── Top Navigation Bar ─── */
+        .topbar {
+            background: rgba(253,252,249,0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(197,161,101,0.25);
+            padding: 0 32px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .topbar-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #1A1A1A 0%, #4A4A4A 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 0.5px;
+        }
+
+        .topbar-brand span {
+            background: linear-gradient(135deg, #C5A165 0%, #A98448 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .topbar-user {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .logout-btn {
+            background: linear-gradient(135deg, #C5A165 0%, #A98448 100%);
+            color: #fff;
+            border: none;
+            padding: 7px 20px;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(169,132,72,0.3);
+        }
+
+        .logout-btn:hover {
+            box-shadow: 0 8px 20px rgba(169,132,72,0.45);
+            transform: translateY(-1px);
+        }
+
+        /* ─── Page Layout ─── */
+        .page {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 36px 24px 60px;
+        }
+
+        .page-header {
+            margin-bottom: 32px;
+        }
+
+        .page-header h1 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #1A1A1A 0%, #4A4A4A 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-header p {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            margin-top: 4px;
+        }
+
+        /* ─── Grid Layout ─── */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto auto auto;
+            gap: 24px;
+        }
+
+        .account-summary-wrapper { grid-column: 1 / -1; }
+        .balance-wrapper          { grid-column: 1 / 2;  }
+        .debit-wrapper            { grid-column: 2 / 3;  }
+        .transactions-wrapper     { grid-column: 1 / -1; }
+
+        /* ─── Section Card ─── */
+        .card {
+            background: rgba(255,255,255,0.55);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(255,255,255,0.6);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 20px 24px 16px;
+            border-bottom: 1px solid rgba(197,161,101,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .card-header h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #262422;
+        }
+
+        .card-badge {
+            font-size: 0.72rem;
+            font-weight: 500;
+            padding: 3px 10px;
+            border-radius: 20px;
+            background: rgba(197,161,101,0.12);
+            color: #A98448;
+        }
+
+        .card-body { padding: 24px; }
+
+        /* ─── Account Summary Hero ─── */
+        .account-hero {
+            background: linear-gradient(135deg, #C5A165 0%, #A98448 55%, #8B6D38 100%);
+            border-radius: var(--radius);
+            padding: 36px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 15px 40px rgba(169,132,72,0.4), 0 5px 15px rgba(0,0,0,0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .account-hero::before,
+        .account-hero::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.08);
+        }
+
+        .account-hero::before { width: 300px; height: 300px; top: -80px; right: -60px; }
+        .account-hero::after  { width: 180px; height: 180px; bottom: -60px; left: 160px; }
+
+        .account-hero-left { position: relative; z-index: 1; }
+
+        .account-hero-label {
+            font-size: 0.78rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 6px;
+        }
+
+        .account-hero-number {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #fff;
+            letter-spacing: 3px;
+            margin-bottom: 14px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .account-hero-meta { display: flex; gap: 32px; }
+
+        .account-hero-meta-item label {
+            display: block;
+            font-size: 0.72rem;
+            color: rgba(255,255,255,0.65);
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            margin-bottom: 2px;
+        }
+
+        .account-hero-meta-item span {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #fff;
+        }
+
+        .account-hero-right {
+            position: relative;
+            z-index: 1;
+            text-align: right;
+        }
+
+        .account-balance-label {
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.65);
+            margin-bottom: 4px;
+        }
+
+        .account-balance-amount {
+            font-size: 2.6rem;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.1;
+            text-shadow: 0 2px 12px rgba(0,0,0,0.15);
+        }
+
+        .account-balance-amount sup {
+            font-size: 1.2rem;
+            font-weight: 500;
+            vertical-align: super;
+            opacity: 0.85;
+        }
+
+        .account-status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255,255,255,0.18);
+            border: 1px solid rgba(255,255,255,0.35);
+            color: #fff;
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-top: 10px;
+        }
+
+        .account-status-pill::before {
+            content: '';
+            display: block;
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            background: #fff;
+            box-shadow: 0 0 6px rgba(255,255,255,0.8);
+        }
+
+        /* ─── Balance Card ─── */
+        .balance-big {
+            font-size: 2.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #C5A165 0%, #A98448 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 4px;
+        }
+
+        .balance-sub { font-size: 0.82rem; color: var(--text-muted); }
+
+        .balance-divider {
+            border: none;
+            border-top: 1px solid rgba(197,161,101,0.2);
+            margin: 18px 0;
+        }
+
+        .balance-stats { display: flex; gap: 0; }
+
+        .balance-stat {
+            flex: 1;
+            padding: 0 16px;
+            border-right: 1px solid rgba(197,161,101,0.18);
+        }
+
+        .balance-stat:first-child { padding-left: 0; }
+        .balance-stat:last-child  { border-right: none; padding-right: 0; }
+
+        .balance-stat .stat-label {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+
+        .balance-stat .stat-value { font-size: 1rem; font-weight: 600; color: #4A4643; }
+        .stat-value.credit { color: var(--success); }
+        .stat-value.debit  { color: var(--danger);  }
+
+        /* ─── Debit Card Visual ─── */
+        .debit-card-visual {
+            background: linear-gradient(135deg, #C5A165 0%, #A98448 55%, #8B6D38 100%);
+            border-radius: 14px;
+            padding: 28px 26px 22px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 28px rgba(169,132,72,0.45);
+            margin-bottom: 20px;
+            min-height: 170px;
+        }
+
+        .debit-card-visual::before {
+            content: '';
+            position: absolute;
+            width: 240px; height: 240px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.06);
+            top: -80px; right: -50px;
+        }
+
+        .debit-card-visual::after {
+            content: '';
+            position: absolute;
+            width: 140px; height: 140px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+            bottom: -50px; left: 60px;
+        }
+
+        .debit-card-chip {
+            width: 40px; height: 30px;
+            border-radius: 5px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.6) 100%);
+            margin-bottom: 20px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .debit-card-chip::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 0; right: 0;
+            height: 1px;
+            background: rgba(0,0,0,0.15);
+            transform: translateY(-50%);
+        }
+
+        .debit-card-chip::after {
+            content: '';
+            position: absolute;
+            left: 50%; top: 0; bottom: 0;
+            width: 1px;
+            background: rgba(0,0,0,0.15);
+            transform: translateX(-50%);
+        }
+
+        .debit-card-number {
+            font-size: 1.1rem;
+            font-weight: 500;
+            letter-spacing: 4px;
+            color: #fff;
+            margin-bottom: 18px;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+        }
+
+        .debit-card-bottom { display: flex; justify-content: space-between; align-items: flex-end; }
+
+        .debit-card-bottom-left label {
+            display: block;
+            font-size: 0.6rem;
+            color: rgba(255,255,255,0.55);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .debit-card-bottom-left span { font-size: 0.88rem; font-weight: 500; color: #fff; }
+
+        .visa-logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            font-style: italic;
+            color: #fff;
+            letter-spacing: -1px;
+            text-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        }
+
+        .debit-info-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 11px 0;
+            border-bottom: 1px solid rgba(197,161,101,0.15);
+            font-size: 0.88rem;
+        }
+
+        .debit-info-row:last-child { border-bottom: none; }
+        .debit-info-row .info-label { color: var(--text-secondary); font-size: 0.82rem; }
+        .debit-info-row .info-value { font-weight: 500; color: #262422; }
+
+        .status-active {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(197,161,101,0.12);
+            color: #A98448;
+            font-size: 0.78rem;
+            font-weight: 500;
+            padding: 3px 10px;
+            border-radius: 20px;
+        }
+
+        .status-active::before {
+            content: '';
+            display: block;
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: #C5A165;
+        }
+
+        /* ─── Transaction List ─── */
+        .txn-list { list-style: none; }
+
+        .txn-item {
+            display: flex;
+            align-items: center;
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(197,161,101,0.12);
+            transition: background 0.15s;
+        }
+
+        .txn-item:last-child { border-bottom: none; }
+
+        .txn-icon {
+            width: 42px; height: 42px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 1.2rem;
+            margin-right: 14px;
+        }
+
+        .txn-icon.credit { background: rgba(90,155,110,0.1); }
+        .txn-icon.debit  { background: rgba(217,108,108,0.1); }
+
+        .txn-info { flex: 1; }
+
+        .txn-description { font-size: 0.9rem; font-weight: 500; color: #262422; margin-bottom: 2px; }
+        .txn-date        { font-size: 0.75rem; color: var(--text-muted); }
+
+        .txn-amount {
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-align: right;
+            min-width: 90px;
+        }
+
+        .txn-amount.credit { color: var(--success); }
+        .txn-amount.debit  { color: var(--danger);  }
+
+        .txn-type-tag { font-size: 0.68rem; margin-top: 2px; text-align: right; color: var(--text-muted); }
+
+        /* ─── Check Balance Section ─── */
+        .check-balance-wrapper { grid-column: 1 / -1; }
+
+        .check-balance-inner {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .balance-reveal-card {
+            flex: 1;
+            min-width: 200px;
+            background: linear-gradient(135deg, rgba(253,251,247,0.8) 0%, rgba(245,239,235,0.6) 100%);
+            border: 1px solid rgba(197,161,101,0.35);
+            box-shadow: 0 8px 24px rgba(197,161,101,0.15);
+            border-radius: var(--radius-sm);
+            padding: 18px 24px;
+            display: none;
+            animation: fadeUp 0.35s ease both;
+        }
+
+        .balance-reveal-card.visible { display: block; }
+
+        .balance-reveal-label {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+
+        .balance-reveal-amount {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #C5A165 0%, #A98448 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ─── Button ─── */
+        .btn {
+            background: linear-gradient(135deg, #C5A165 0%, #A98448 100%);
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            padding: 12px 32px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: all 0.25s;
+            box-shadow: 0 6px 18px rgba(169,132,72,0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .btn:hover  { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(169,132,72,0.5); }
+        .btn:active { transform: translateY(0);    box-shadow: 0 4px 12px rgba(169,132,72,0.25); }
+
+        /* ─── Quick Actions ─── */
+        .quick-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
+
+        .quick-btn {
+            flex: 1;
+            min-width: 100px;
+            background: rgba(197,161,101,0.07);
+            border: 1px solid rgba(197,161,101,0.25);
+            border-radius: var(--radius-sm);
+            padding: 12px 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #4A4643;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .quick-btn:hover {
+            background: rgba(197,161,101,0.14);
+            border-color: rgba(197,161,101,0.45);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(197,161,101,0.2);
+        }
+
+        .quick-btn .qb-icon { font-size: 1.3rem; display: block; margin-bottom: 4px; }
+
+        /* ─── Animation ─── */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(18px); }
+            to   { opacity: 1; transform: translateY(0);    }
+        }
+
+        .account-hero,
+        .card,
+        .dashboard-grid > * { animation: fadeUp 0.45s ease both; }
+
+        .card:nth-child(2) { animation-delay: 0.08s; }
+        .card:nth-child(3) { animation-delay: 0.16s; }
+        .card:nth-child(4) { animation-delay: 0.24s; }
+
+        /* ─── Responsive ─── */
+        @media (max-width: 768px) {
+            .dashboard-grid { grid-template-columns: 1fr; }
+
+            .balance-wrapper,
+            .debit-wrapper,
+            .account-summary-wrapper,
+            .transactions-wrapper { grid-column: 1 / -1; }
+
+            .account-hero {
+                flex-direction: column;
+                gap: 28px;
+                padding: 28px 24px;
+            }
+
+            .account-hero-right { text-align: left; width: 100%; }
+            .topbar { padding: 0 16px; }
+            .page   { padding: 24px 16px 48px; }
+            .account-balance-amount { font-size: 2rem; }
+        }
+
+        @media (max-width: 480px) {
+            .account-hero-meta { gap: 20px; }
+            .debit-card-number { font-size: 0.95rem; letter-spacing: 3px; }
+            .balance-stats { flex-direction: column; gap: 12px; }
+            .balance-stat  { border-right: none; border-bottom: 1px solid rgba(197,161,101,0.18); padding: 0 0 12px; }
+            .balance-stat:last-child { border-bottom: none; padding-bottom: 0; }
+        }
+    </style>
 </head>
 
 <body>
-    <div class="container dashboard-container">
-        <div class="dashboard-nav">
-            <h2 style="color: var(--text-secondary); font-size: 1.2rem;">My Dashboard</h2>
-            <a href="#" id="logoutBtn">Logout</a>
+
+    <!-- ── Top Navigation ── -->
+    <nav class="topbar">
+        <div class="topbar-brand">Kod<span>Bank</span></div>
+        <div class="topbar-right">
+            <span class="topbar-user" id="topbarUser">Welcome, User</span>
+            <a href="#" id="logoutBtn" class="logout-btn">Logout</a>
         </div>
-        <div class="header" style="margin-bottom: 3rem;">
-            <h1 id="welcomeUser" style="font-size: 2.5rem;">Welcome, User</h1>
+    </nav>
+
+    <!-- ── Main Page ── -->
+    <main class="page">
+
+        <div class="page-header">
+            <h1 id="welcomeUser">Welcome, User</h1>
             <p>Manage your funds securely and beautifully.</p>
         </div>
 
-        <button id="checkBalanceBtn" class="btn" style="max-width: 250px; margin: 0 auto; display: block;">Check
-            Balance</button>
+        <div class="dashboard-grid">
 
-        <div id="balanceCard" class="balance-card">
-            <div class="balance-label">Your Current Balance Is</div>
-            <div id="balanceDisplay" class="balance-amount">$0.00</div>
-        </div>
-    </div>
-    <script src="js/dashboard.js"></script>
+            <!-- ══ 1. ACCOUNT SUMMARY CARD ══ -->
+            <div class="account-summary-wrapper">
+                <div class="account-hero">
+                    <div class="account-hero-left">
+                        <div class="account-hero-label">Account Number</div>
+                        <div class="account-hero-number">XXXX &nbsp;XXXX &nbsp;4589</div>
+                        <div class="account-hero-meta">
+                            <div class="account-hero-meta-item">
+                                <label>Account Type</label>
+                                <span>Savings</span>
+                            </div>
+                            <div class="account-hero-meta-item">
+                                <label>Branch</label>
+                                <span>Main Branch</span>
+                            </div>
+                            <div class="account-hero-meta-item">
+                                <label>Currency</label>
+                                <span>USD</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="account-hero-right">
+                        <div class="account-balance-label">Available Balance</div>
+                        <div class="account-balance-amount"><sup>$</sup>12,458.75</div>
+                        <div class="account-status-pill">Active Account</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ══ 2. CHECK BALANCE SECTION ══ -->
+            <div class="check-balance-wrapper">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Check Balance</h3>
+                        <span class="card-badge">Live</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="check-balance-inner">
+                            <button id="checkBalanceBtn" class="btn">Check Balance</button>
+                            <div id="balanceCard" class="balance-reveal-card">
+                                <div class="balance-reveal-label">Your Current Balance Is</div>
+                                <div id="balanceDisplay" class="balance-reveal-amount">$12,458.75</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ══ 3. BALANCE OVERVIEW CARD ══ -->
+            <div class="balance-wrapper">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Balance Overview</h3>
+                        <span class="card-badge">February 2026</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="balance-big">$12,458.75</div>
+                        <div class="balance-sub">Total Available Balance</div>
+                        <hr class="balance-divider">
+                        <div class="balance-stats">
+                            <div class="balance-stat">
+                                <div class="stat-label">Income</div>
+                                <div class="stat-value credit">+$4,200.00</div>
+                            </div>
+                            <div class="balance-stat">
+                                <div class="stat-label">Expenses</div>
+                                <div class="stat-value debit">−$1,741.25</div>
+                            </div>
+                            <div class="balance-stat">
+                                <div class="stat-label">Net</div>
+                                <div class="stat-value credit">+$2,458.75</div>
+                            </div>
+                        </div>
+                        <div class="quick-actions">
+                            <button class="quick-btn"><span class="qb-icon">💳</span>Pay</button>
+                            <button class="quick-btn"><span class="qb-icon">↗️</span>Transfer</button>
+                            <button class="quick-btn"><span class="qb-icon">📥</span>Deposit</button>
+                            <button class="quick-btn"><span class="qb-icon">📜</span>Statement</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ══ 4. DEBIT CARD SECTION ══ -->
+            <div class="debit-wrapper">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>My Debit Card</h3>
+                        <span class="card-badge">Visa</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="debit-card-visual">
+                            <div class="debit-card-chip"></div>
+                            <div class="debit-card-number">XXXX &nbsp; XXXX &nbsp; XXXX &nbsp; 4589</div>
+                            <div class="debit-card-bottom">
+                                <div class="debit-card-bottom-left">
+                                    <label>Card Holder</label>
+                                    <span id="cardHolderName">USER NAME</span>
+                                    <br>
+                                    <label style="margin-top:6px;">Expires</label>
+                                    <span>08 / 28</span>
+                                </div>
+                                <div class="visa-logo">VISA</div>
+                            </div>
+                        </div>
+                        <div class="debit-info-row">
+                            <span class="info-label">Card Number</span>
+                            <span class="info-value">XXXX XXXX XXXX 4589</span>
+                        </div>
+                        <div class="debit-info-row">
+                            <span class="info-label">Card Type</span>
+                            <span class="info-value">Visa Debit</span>
+                        </div>
+                        <div class="debit-info-row">
+                            <span class="info-label">Expiry Date</span>
+                            <span class="info-value">08 / 2028</span>
+                        </div>
+                        <div class="debit-info-row">
+                            <span class="info-label">Network</span>
+                            <span class="info-value">Visa International</span>
+                        </div>
+                        <div class="debit-info-row">
+                            <span class="info-label">Status</span>
+                            <span class="info-value"><span class="status-active">Active</span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ══ 5. RECENT TRANSACTIONS ══ -->
+            <div class="transactions-wrapper">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Recent Transactions</h3>
+                        <span class="card-badge">Last 30 days</span>
+                    </div>
+                    <div class="card-body" style="padding-top: 8px;">
+                        <ul class="txn-list">
+
+                            <li class="txn-item">
+                                <div class="txn-icon credit">💰</div>
+                                <div class="txn-info">
+                                    <div class="txn-description">Salary Credit — Feb 2026</div>
+                                    <div class="txn-date">20 Feb 2026 &nbsp;·&nbsp; Bank Transfer</div>
+                                </div>
+                                <div>
+                                    <div class="txn-amount credit">+ $4,200.00</div>
+                                    <div class="txn-type-tag">Credit</div>
+                                </div>
+                            </li>
+
+                            <li class="txn-item">
+                                <div class="txn-icon debit">🏠</div>
+                                <div class="txn-info">
+                                    <div class="txn-description">Rent Payment — Feb 2026</div>
+                                    <div class="txn-date">18 Feb 2026 &nbsp;·&nbsp; Online Transfer</div>
+                                </div>
+                                <div>
+                                    <div class="txn-amount debit">− $1,200.00</div>
+                                    <div class="txn-type-tag">Debit</div>
+                                </div>
+                            </li>
+
+                            <li class="txn-item">
+                                <div class="txn-icon debit">🛒</div>
+                                <div class="txn-info">
+                                    <div class="txn-description">Amazon Purchase</div>
+                                    <div class="txn-date">15 Feb 2026 &nbsp;·&nbsp; Debit Card</div>
+                                </div>
+                                <div>
+                                    <div class="txn-amount debit">− $349.99</div>
+                                    <div class="txn-type-tag">Debit</div>
+                                </div>
+                            </li>
+
+                            <li class="txn-item">
+                                <div class="txn-icon credit">🔁</div>
+                                <div class="txn-info">
+                                    <div class="txn-description">Refund — Tech Store</div>
+                                    <div class="txn-date">12 Feb 2026 &nbsp;·&nbsp; Merchant Refund</div>
+                                </div>
+                                <div>
+                                    <div class="txn-amount credit">+ $89.50</div>
+                                    <div class="txn-type-tag">Credit</div>
+                                </div>
+                            </li>
+
+                            <li class="txn-item">
+                                <div class="txn-icon debit">⚡</div>
+                                <div class="txn-info">
+                                    <div class="txn-description">Electricity Bill Payment</div>
+                                    <div class="txn-date">10 Feb 2026 &nbsp;·&nbsp; Bill Pay</div>
+                                </div>
+                                <div>
+                                    <div class="txn-amount debit">− $191.26</div>
+                                    <div class="txn-type-tag">Debit</div>
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /dashboard-grid -->
+    </main>
+
+    <script>
+        // ── Personalise from localStorage ──
+        (function () {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
+            const users       = JSON.parse(localStorage.getItem('users')       || '[]');
+
+            if (!currentUser) {
+                console.warn('No session found — showing demo data.');
+                return;
+            }
+
+            const userData = users.find(u => u.username === currentUser);
+            if (!userData) return;
+
+            const name = userData.username || 'User';
+
+            document.getElementById('welcomeUser').textContent = `Welcome, ${name}`;
+            document.getElementById('topbarUser').textContent  = `Welcome, ${name}`;
+
+            const cardName = document.getElementById('cardHolderName');
+            if (cardName) cardName.textContent = name.toUpperCase();
+        }());
+
+        // ── Logout ──
+        document.getElementById('logoutBtn').addEventListener('click', function (e) {
+            e.preventDefault();
+            localStorage.removeItem('currentUser');
+            window.location.href = 'index.html';
+        });
+
+        // ── Check Balance ──
+        document.getElementById('checkBalanceBtn').addEventListener('click', function () {
+            const card = document.getElementById('balanceCard');
+            card.classList.toggle('visible');
+            this.textContent = card.classList.contains('visible') ? 'Hide Balance' : 'Check Balance';
+
+            if (card.classList.contains('visible') && typeof confetti === 'function') {
+                let elapsed = 0;
+                const interval = setInterval(function () {
+                    confetti({ particleCount: 50, spread: 70, origin: { x: Math.random() * 0.4 + 0.1, y: 0.6 } });
+                    confetti({ particleCount: 50, spread: 70, origin: { x: Math.random() * 0.4 + 0.6, y: 0.6 } });
+                    elapsed += 250;
+                    if (elapsed >= 3000) clearInterval(interval);
+                }, 250);
+            }
+        });
+
+        // ── Quick action buttons ──
+        document.querySelectorAll('.quick-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const label = this.querySelector('.qb-icon').nextSibling?.textContent?.trim()
+                           || this.textContent.trim();
+                alert(`"${label}" feature coming soon!`);
+            });
+        });
+    </script>
+
 </body>
-
 </html>
