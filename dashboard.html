@@ -1,6 +1,5 @@
-       <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +7,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
     <style>
         :root {
             --primary:       #C5A165;
@@ -32,9 +30,7 @@
             --radius:        20px;
             --radius-sm:     14px;
         }
-
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
         body {
             font-family: 'Poppins', sans-serif;
             background-color: #F5EFEB;
@@ -48,7 +44,6 @@
             color: var(--text-primary);
             min-height: 100vh;
         }
-
         body::before {
             content: '';
             position: fixed;
@@ -60,9 +55,7 @@
             z-index: 0;
             pointer-events: none;
         }
-
         nav, main { position: relative; z-index: 1; }
-
         /* ── Topbar ── */
         .topbar {
             background: rgba(253,252,249,0.75);
@@ -79,7 +72,6 @@
             top: 0;
             z-index: 100;
         }
-
         .topbar-brand {
             font-size: 1.5rem;
             font-weight: 700;
@@ -89,18 +81,14 @@
             background-clip: text;
             letter-spacing: 0.5px;
         }
-
         .topbar-brand span {
             background: linear-gradient(135deg, #C5A165 0%, #A98448 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-
         .topbar-right { display: flex; align-items: center; gap: 20px; }
-
         .topbar-user { font-size: 0.85rem; color: var(--text-secondary); }
-
         .logout-btn {
             background: linear-gradient(135deg, #C5A165 0%, #A98448 100%);
             color: #fff;
@@ -114,13 +102,10 @@
             text-decoration: none;
             box-shadow: 0 4px 12px rgba(169,132,72,0.3);
         }
-
         .logout-btn:hover { box-shadow: 0 8px 20px rgba(169,132,72,0.45); transform: translateY(-1px); }
-
         /* ── Page layout ── */
         .page { max-width: 1100px; margin: 0 auto; padding: 36px 24px 60px; }
         .page-header { margin-bottom: 32px; }
-
         .page-header h1 {
             font-size: 1.9rem;
             font-weight: 700;
@@ -129,22 +114,18 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-
         .page-header p { color: var(--text-muted); font-size: 0.92rem; margin-top: 4px; }
-
         /* ── Grid ── */
         .dashboard-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 24px;
         }
-
         .account-summary-wrapper { grid-column: 1 / -1; }
         .check-balance-wrapper   { grid-column: 1 / -1; }
         .balance-wrapper         { grid-column: 1 / 2;  }
         .debit-wrapper           { grid-column: 2 / 3;  }
         .transactions-wrapper    { grid-column: 1 / -1; }
-
         /* ── Card ── */
         .card {
             background: rgba(255,255,255,0.55);
@@ -155,7 +136,6 @@
             box-shadow: var(--shadow-md);
             overflow: hidden;
         }
-
         .card-header {
             padding: 20px 24px 16px;
             border-bottom: 1px solid rgba(197,161,101,0.15);
@@ -163,9 +143,7 @@
             align-items: center;
             justify-content: space-between;
         }
-
         .card-header h3 { font-size: 1rem; font-weight: 600; color: #262422; }
-
         .card-badge {
             font-size: 0.72rem;
             font-weight: 500;
@@ -174,9 +152,7 @@
             background: rgba(197,161,101,0.12);
             color: #A98448;
         }
-
         .card-body { padding: 24px; }
-
         /* ── Account Hero ── */
         .account-hero {
             background: linear-gradient(135deg, #C5A165 0%, #A98448 55%, #8B6D38 100%);
@@ -189,19 +165,15 @@
             position: relative;
             overflow: hidden;
         }
-
         .account-hero::before, .account-hero::after {
             content: '';
             position: absolute;
             border-radius: 50%;
             background: rgba(255,255,255,0.08);
         }
-
         .account-hero::before { width: 300px; height: 300px; top: -80px; right: -60px; }
         .account-hero::after  { width: 180px; height: 180px; bottom: -60px; left: 160px; }
-
         .account-hero-left { position: relative; z-index: 1; }
-
         .account-hero-label {
             font-size: 0.78rem;
             letter-spacing: 1.5px;
@@ -209,7 +181,6 @@
             color: rgba(255,255,255,0.7);
             margin-bottom: 6px;
         }
-
         .account-hero-number {
             font-size: 1.5rem;
             font-weight: 600;
@@ -218,9 +189,7 @@
             margin-bottom: 14px;
             text-shadow: 0 2px 8px rgba(0,0,0,0.15);
         }
-
         .account-hero-meta { display: flex; gap: 32px; }
-
         .account-hero-meta-item label {
             display: block;
             font-size: 0.72rem;
@@ -229,11 +198,8 @@
             text-transform: uppercase;
             margin-bottom: 2px;
         }
-
         .account-hero-meta-item span { font-size: 0.9rem; font-weight: 500; color: #fff; }
-
         .account-hero-right { position: relative; z-index: 1; text-align: right; }
-
         .account-balance-label {
             font-size: 0.75rem;
             letter-spacing: 1px;
@@ -241,7 +207,6 @@
             color: rgba(255,255,255,0.65);
             margin-bottom: 4px;
         }
-
         .account-balance-amount {
             font-size: 2.6rem;
             font-weight: 700;
@@ -249,9 +214,7 @@
             line-height: 1.1;
             text-shadow: 0 2px 12px rgba(0,0,0,0.15);
         }
-
         .account-balance-amount sup { font-size: 1.2rem; font-weight: 500; vertical-align: super; opacity: 0.85; }
-
         .account-status-pill {
             display: inline-flex;
             align-items: center;
@@ -265,7 +228,6 @@
             border-radius: 20px;
             margin-top: 10px;
         }
-
         .account-status-pill::before {
             content: '';
             display: block;
@@ -274,7 +236,6 @@
             background: #fff;
             box-shadow: 0 0 6px rgba(255,255,255,0.8);
         }
-
         /* ── Balance card ── */
         .balance-big {
             font-size: 2.2rem;
@@ -285,17 +246,12 @@
             background-clip: text;
             margin-bottom: 4px;
         }
-
         .balance-sub { font-size: 0.82rem; color: var(--text-muted); }
-
         .balance-divider { border: none; border-top: 1px solid rgba(197,161,101,0.2); margin: 18px 0; }
-
         .balance-stats { display: flex; gap: 0; }
-
         .balance-stat { flex: 1; padding: 0 16px; border-right: 1px solid rgba(197,161,101,0.18); }
         .balance-stat:first-child { padding-left: 0; }
         .balance-stat:last-child  { border-right: none; padding-right: 0; }
-
         .balance-stat .stat-label {
             font-size: 0.72rem;
             text-transform: uppercase;
@@ -303,11 +259,9 @@
             color: var(--text-muted);
             margin-bottom: 4px;
         }
-
         .balance-stat .stat-value { font-size: 1rem; font-weight: 600; color: #4A4643; }
         .stat-value.credit { color: var(--success); }
         .stat-value.debit  { color: var(--danger);  }
-
         /* ── Debit card visual ── */
         .debit-card-visual {
             background: linear-gradient(135deg, #C5A165 0%, #A98448 55%, #8B6D38 100%);
@@ -319,7 +273,6 @@
             margin-bottom: 20px;
             min-height: 170px;
         }
-
         .debit-card-visual::before {
             content: '';
             position: absolute;
@@ -328,7 +281,6 @@
             background: rgba(255,255,255,0.06);
             top: -80px; right: -50px;
         }
-
         .debit-card-visual::after {
             content: '';
             position: absolute;
@@ -337,7 +289,6 @@
             background: rgba(255,255,255,0.05);
             bottom: -50px; left: 60px;
         }
-
         .debit-card-chip {
             width: 40px; height: 30px;
             border-radius: 5px;
@@ -347,7 +298,6 @@
             position: relative;
             overflow: hidden;
         }
-
         .debit-card-chip::before {
             content: '';
             position: absolute;
@@ -356,7 +306,6 @@
             background: rgba(0,0,0,0.15);
             transform: translateY(-50%);
         }
-
         .debit-card-chip::after {
             content: '';
             position: absolute;
@@ -365,7 +314,6 @@
             background: rgba(0,0,0,0.15);
             transform: translateX(-50%);
         }
-
         .debit-card-number {
             font-size: 1.1rem;
             font-weight: 500;
@@ -374,9 +322,7 @@
             margin-bottom: 18px;
             text-shadow: 0 1px 4px rgba(0,0,0,0.3);
         }
-
         .debit-card-bottom { display: flex; justify-content: space-between; align-items: flex-end; }
-
         .debit-card-bottom-left label {
             display: block;
             font-size: 0.6rem;
@@ -384,9 +330,7 @@
             letter-spacing: 1px;
             text-transform: uppercase;
         }
-
         .debit-card-bottom-left span { font-size: 0.88rem; font-weight: 500; color: #fff; }
-
         .visa-logo {
             font-size: 1.5rem;
             font-weight: 800;
@@ -395,7 +339,6 @@
             letter-spacing: -1px;
             text-shadow: 0 2px 6px rgba(0,0,0,0.3);
         }
-
         .debit-info-row {
             display: flex;
             align-items: center;
@@ -404,11 +347,9 @@
             border-bottom: 1px solid rgba(197,161,101,0.15);
             font-size: 0.88rem;
         }
-
         .debit-info-row:last-child { border-bottom: none; }
         .debit-info-row .info-label { color: var(--text-secondary); font-size: 0.82rem; }
         .debit-info-row .info-value { font-weight: 500; color: #262422; }
-
         .status-active {
             display: inline-flex;
             align-items: center;
@@ -420,7 +361,6 @@
             padding: 3px 10px;
             border-radius: 20px;
         }
-
         .status-active::before {
             content: '';
             display: block;
@@ -428,19 +368,15 @@
             border-radius: 50%;
             background: #C5A165;
         }
-
         /* ── Transactions ── */
         .txn-list { list-style: none; }
-
         .txn-item {
             display: flex;
             align-items: center;
             padding: 14px 0;
             border-bottom: 1px solid rgba(197,161,101,0.12);
         }
-
         .txn-item:last-child { border-bottom: none; }
-
         .txn-icon {
             width: 42px; height: 42px;
             border-radius: 12px;
@@ -451,23 +387,17 @@
             font-size: 1.2rem;
             margin-right: 14px;
         }
-
         .txn-icon.credit { background: rgba(90,155,110,0.1); }
         .txn-icon.debit  { background: rgba(217,108,108,0.1); }
-
         .txn-info { flex: 1; }
         .txn-description { font-size: 0.9rem; font-weight: 500; color: #262422; margin-bottom: 2px; }
         .txn-date        { font-size: 0.75rem; color: var(--text-muted); }
-
         .txn-amount { font-size: 0.95rem; font-weight: 600; text-align: right; min-width: 90px; }
         .txn-amount.credit { color: var(--success); }
         .txn-amount.debit  { color: var(--danger);  }
-
         .txn-type-tag { font-size: 0.68rem; margin-top: 2px; text-align: right; color: var(--text-muted); }
-
         /* ── Check Balance ── */
         .check-balance-inner { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
-
         .balance-reveal-card {
             flex: 1;
             min-width: 200px;
@@ -479,9 +409,7 @@
             display: none;
             animation: fadeUp 0.35s ease both;
         }
-
         .balance-reveal-card.visible { display: block; }
-
         .balance-reveal-label {
             font-size: 0.72rem;
             text-transform: uppercase;
@@ -489,7 +417,6 @@
             color: var(--text-muted);
             margin-bottom: 4px;
         }
-
         .balance-reveal-amount {
             font-size: 2rem;
             font-weight: 700;
@@ -498,7 +425,6 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-
         /* ── Button ── */
         .btn {
             background: linear-gradient(135deg, #C5A165 0%, #A98448 100%);
@@ -515,7 +441,6 @@
             position: relative;
             overflow: hidden;
         }
-
         .btn::after {
             content: '';
             position: absolute;
@@ -523,13 +448,10 @@
             background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 60%);
             pointer-events: none;
         }
-
         .btn:hover  { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(169,132,72,0.5); }
         .btn:active { transform: translateY(0);    box-shadow: 0 4px 12px rgba(169,132,72,0.25); }
-
         /* ── Quick actions ── */
         .quick-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
-
         .quick-btn {
             flex: 1;
             min-width: 100px;
@@ -545,20 +467,16 @@
             font-size: 0.8rem;
             font-weight: 500;
         }
-
         .quick-btn:hover {
             background: rgba(197,161,101,0.14);
             border-color: rgba(197,161,101,0.45);
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(197,161,101,0.2);
         }
-
         .quick-btn .qb-icon { font-size: 1.3rem; display: block; margin-bottom: 4px; }
-
         /* ══════════════════════════════════
            KodBot AI Chatbot
         ══════════════════════════════════ */
-
         #kodbot-trigger {
             position: fixed;
             bottom: 28px;
@@ -576,10 +494,8 @@
             z-index: 9999;
             transition: all 0.3s cubic-bezier(.34,1.56,.64,1);
         }
-
         #kodbot-trigger:hover { transform: scale(1.1); box-shadow: 0 12px 32px rgba(169,132,72,0.6); }
         #kodbot-trigger svg  { width: 28px; height: 28px; fill: #fff; }
-
         #kodbot-trigger::after {
             content: '';
             position: absolute;
@@ -590,12 +506,10 @@
             border: 2px solid #fff;
             animation: pulse-dot 2s infinite;
         }
-
         @keyframes pulse-dot {
             0%, 100% { transform: scale(1); opacity: 1; }
             50%       { transform: scale(1.3); opacity: 0.7; }
         }
-
         #kodbot-window {
             position: fixed;
             bottom: 100px;
@@ -617,9 +531,7 @@
             pointer-events: none;
             transition: all 0.3s cubic-bezier(.34,1.56,.64,1);
         }
-
         #kodbot-window.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
-
         .kb-header {
             background: linear-gradient(135deg, #C5A165 0%, #A98448 100%);
             padding: 16px 18px;
@@ -628,7 +540,6 @@
             gap: 12px;
             flex-shrink: 0;
         }
-
         .kb-avatar {
             width: 40px; height: 40px;
             border-radius: 50%;
@@ -639,10 +550,8 @@
             font-size: 1.3rem;
             flex-shrink: 0;
         }
-
         .kb-header-info { flex: 1; }
         .kb-header-name { font-size: 0.95rem; font-weight: 700; color: #fff; letter-spacing: 0.3px; }
-
         .kb-header-status {
             font-size: 0.72rem;
             color: rgba(255,255,255,0.8);
@@ -651,7 +560,6 @@
             gap: 5px;
             margin-top: 1px;
         }
-
         .kb-header-status::before {
             content: '';
             display: block;
@@ -659,7 +567,6 @@
             border-radius: 50%;
             background: #a8f0c0;
         }
-
         .kb-close {
             background: rgba(255,255,255,0.2);
             border: none;
@@ -674,9 +581,7 @@
             transition: background 0.2s;
             flex-shrink: 0;
         }
-
         .kb-close:hover { background: rgba(255,255,255,0.35); }
-
         .kb-messages {
             flex: 1;
             overflow-y: auto;
@@ -688,20 +593,15 @@
             max-height: 380px;
             scroll-behavior: smooth;
         }
-
         .kb-messages::-webkit-scrollbar { width: 4px; }
         .kb-messages::-webkit-scrollbar-track { background: transparent; }
         .kb-messages::-webkit-scrollbar-thumb { background: rgba(197,161,101,0.3); border-radius: 4px; }
-
         .kb-msg { display: flex; align-items: flex-end; gap: 8px; animation: msgIn 0.25s ease both; }
-
         @keyframes msgIn {
             from { opacity: 0; transform: translateY(8px); }
             to   { opacity: 1; transform: translateY(0); }
         }
-
         .kb-msg.user { flex-direction: row-reverse; }
-
         .kb-msg-avatar {
             width: 28px; height: 28px;
             border-radius: 50%;
@@ -711,10 +611,8 @@
             justify-content: center;
             font-size: 0.85rem;
         }
-
         .kb-msg.bot  .kb-msg-avatar { background: linear-gradient(135deg,#C5A165,#A98448); }
         .kb-msg.user .kb-msg-avatar { background: linear-gradient(135deg,#8B6D38,#C5A165); }
-
         .kb-bubble {
             max-width: 78%;
             padding: 10px 14px;
@@ -722,7 +620,6 @@
             font-size: 0.85rem;
             line-height: 1.5;
         }
-
         .kb-msg.bot .kb-bubble {
             background: rgba(255,255,255,0.85);
             border: 1px solid rgba(197,161,101,0.2);
@@ -730,33 +627,26 @@
             border-bottom-left-radius: 4px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
-
         .kb-msg.user .kb-bubble {
             background: linear-gradient(135deg, #C5A165 0%, #A98448 100%);
             color: #fff;
             border-bottom-right-radius: 4px;
             box-shadow: 0 2px 8px rgba(169,132,72,0.3);
         }
-
         .kb-typing { display: flex; gap: 4px; padding: 10px 14px; align-items: center; }
-
         .kb-typing span {
             width: 7px; height: 7px;
             border-radius: 50%;
             background: #C5A165;
             animation: bounce 1.2s infinite;
         }
-
         .kb-typing span:nth-child(2) { animation-delay: 0.2s; }
         .kb-typing span:nth-child(3) { animation-delay: 0.4s; }
-
         @keyframes bounce {
             0%, 60%, 100% { transform: translateY(0); }
             30%            { transform: translateY(-6px); }
         }
-
         .kb-suggestions { display: flex; flex-wrap: wrap; gap: 6px; padding: 4px 16px 10px; flex-shrink: 0; }
-
         .kb-chip {
             background: rgba(197,161,101,0.1);
             border: 1px solid rgba(197,161,101,0.3);
@@ -770,9 +660,7 @@
             transition: all 0.2s;
             white-space: nowrap;
         }
-
         .kb-chip:hover { background: rgba(197,161,101,0.22); border-color: rgba(197,161,101,0.55); transform: translateY(-1px); }
-
         .kb-input-bar {
             display: flex;
             align-items: center;
@@ -781,7 +669,6 @@
             border-top: 1px solid rgba(197,161,101,0.15);
             flex-shrink: 0;
         }
-
         #kb-input {
             flex: 1;
             border: 1px solid rgba(197,161,101,0.3);
@@ -794,10 +681,8 @@
             outline: none;
             transition: border-color 0.2s;
         }
-
         #kb-input:focus { border-color: #C5A165; box-shadow: 0 0 0 3px rgba(197,161,101,0.12); }
         #kb-input::placeholder { color: #857E78; }
-
         #kb-send {
             width: 38px; height: 38px;
             border-radius: 50%;
@@ -811,30 +696,23 @@
             transition: all 0.2s;
             box-shadow: 0 4px 10px rgba(169,132,72,0.35);
         }
-
         #kb-send:hover { transform: scale(1.08); box-shadow: 0 6px 16px rgba(169,132,72,0.5); }
         #kb-send svg { width: 16px; height: 16px; fill: #fff; }
-
         .kb-powered { text-align: center; font-size: 0.65rem; color: #857E78; padding: 4px 0 8px; letter-spacing: 0.3px; }
-
         /* ── Animations ── */
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(18px); }
             to   { opacity: 1; transform: translateY(0); }
         }
-
         .account-hero, .card, .dashboard-grid > * { animation: fadeUp 0.45s ease both; }
         .card:nth-child(2) { animation-delay: 0.08s; }
         .card:nth-child(3) { animation-delay: 0.16s; }
         .card:nth-child(4) { animation-delay: 0.24s; }
-
         /* ── Responsive ── */
         @media (max-width: 768px) {
             .dashboard-grid { grid-template-columns: 1fr; }
-
             .balance-wrapper, .debit-wrapper,
             .account-summary-wrapper, .transactions-wrapper { grid-column: 1 / -1; }
-
             .account-hero { flex-direction: column; gap: 28px; padding: 28px 24px; }
             .account-hero-right { text-align: left; width: 100%; }
             .topbar { padding: 0 16px; }
@@ -842,7 +720,6 @@
             .account-balance-amount { font-size: 2rem; }
             #kodbot-window { width: calc(100vw - 32px); right: 16px; }
         }
-
         @media (max-width: 480px) {
             .account-hero-meta { gap: 20px; }
             .debit-card-number { font-size: 0.95rem; letter-spacing: 3px; }
@@ -852,9 +729,7 @@
         }
     </style>
 </head>
-
 <body>
-
     <nav class="topbar">
         <div class="topbar-brand">Kod<span>Bank</span></div>
         <div class="topbar-right">
@@ -862,16 +737,12 @@
             <a href="#" id="logoutBtn" class="logout-btn">Logout</a>
         </div>
     </nav>
-
     <main class="page">
-
         <div class="page-header">
             <h1 id="welcomeUser">Welcome, User</h1>
             <p>Manage your funds securely and beautifully.</p>
         </div>
-
         <div class="dashboard-grid">
-
             <!-- 1. ACCOUNT SUMMARY -->
             <div class="account-summary-wrapper">
                 <div class="account-hero">
@@ -900,7 +771,6 @@
                     </div>
                 </div>
             </div>
-
             <!-- 2. CHECK BALANCE -->
             <div class="check-balance-wrapper">
                 <div class="card">
@@ -919,7 +789,6 @@
                     </div>
                 </div>
             </div>
-
             <!-- 3. BALANCE OVERVIEW -->
             <div class="balance-wrapper">
                 <div class="card">
@@ -954,7 +823,6 @@
                     </div>
                 </div>
             </div>
-
             <!-- 4. DEBIT CARD -->
             <div class="debit-wrapper">
                 <div class="card">
@@ -1000,7 +868,6 @@
                     </div>
                 </div>
             </div>
-
             <!-- 5. RECENT TRANSACTIONS -->
             <div class="transactions-wrapper">
                 <div class="card">
@@ -1069,17 +936,14 @@
                     </div>
                 </div>
             </div>
-
         </div><!-- /dashboard-grid -->
     </main>
-
     <!-- KodBot floating button -->
     <button id="kodbot-trigger" title="Chat with KodBot">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2.05 21.95l4.782-1.388A9.953 9.953 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 2a8 8 0 110 16A8 8 0 0112 4zM8 11a1 1 0 100 2 1 1 0 000-2zm4 0a1 1 0 100 2 1 1 0 000-2zm4 0a1 1 0 100 2 1 1 0 000-2z"/>
         </svg>
     </button>
-
     <!-- KodBot chat window -->
     <div id="kodbot-window">
         <div class="kb-header">
@@ -1107,7 +971,6 @@
         </div>
         <div class="kb-powered">Powered by KodBot AI &nbsp;·&nbsp; KodBank</div>
     </div>
-
     <script>
         /* ── Session personalisation ── */
         (function () {
@@ -1122,14 +985,12 @@
             const cn = document.getElementById('cardHolderName');
             if (cn) cn.textContent = name.toUpperCase();
         }());
-
         /* ── Logout ── */
         document.getElementById('logoutBtn').addEventListener('click', function (e) {
             e.preventDefault();
             localStorage.removeItem('currentUser');
             window.location.href = 'index.html';
         });
-
         /* ── Check Balance ── */
         document.getElementById('checkBalanceBtn').addEventListener('click', function () {
             const card = document.getElementById('balanceCard');
@@ -1145,7 +1006,6 @@
                 }, 250);
             }
         });
-
         /* ── Quick action buttons ── */
         document.querySelectorAll('.quick-btn').forEach(btn => {
             btn.addEventListener('click', function () {
@@ -1153,7 +1013,6 @@
                 alert(`"${label}" feature coming soon!`);
             });
         });
-
         /* ══════════════════════════════════════════
            KodBot — AI Banking Assistant Engine
         ══════════════════════════════════════════ */
@@ -1165,25 +1024,20 @@
             const input    = document.getElementById('kb-input');
             const sendBtn  = document.getElementById('kb-send');
             const chips    = document.querySelectorAll('.kb-chip');
-
             trigger.addEventListener('click', () => {
                 win.classList.toggle('open');
                 if (win.classList.contains('open') && msgs.children.length === 0) greet();
                 if (win.classList.contains('open')) input.focus();
             });
-
             closeBtn.addEventListener('click', () => win.classList.remove('open'));
-
             function greet() {
                 const name = (document.getElementById('welcomeUser').textContent || '')
                     .replace('Welcome, ', '') || 'there';
                 botMsg(`Hi ${name}! 👋 I'm <strong>KodBot</strong>, your KodBank AI assistant.<br>I can help with your balance, transactions, cards, transfers, loans, and more.<br><br>What can I help you with today?`);
             }
-
             chips.forEach(c => c.addEventListener('click', () => sendMessage(c.textContent.trim())));
             sendBtn.addEventListener('click', () => sendMessage(input.value));
             input.addEventListener('keydown', e => { if (e.key === 'Enter') sendMessage(input.value); });
-
             function sendMessage(text) {
                 text = text.trim();
                 if (!text) return;
@@ -1192,7 +1046,6 @@
                 showTyping();
                 setTimeout(() => { removeTyping(); botMsg(getResponse(text)); }, 700 + Math.random() * 500);
             }
-
             function userMsg(text) {
                 const el = document.createElement('div');
                 el.className = 'kb-msg user';
@@ -1200,7 +1053,6 @@
                 msgs.appendChild(el);
                 scroll();
             }
-
             function botMsg(html) {
                 const el = document.createElement('div');
                 el.className = 'kb-msg bot';
@@ -1208,7 +1060,6 @@
                 msgs.appendChild(el);
                 scroll();
             }
-
             let typingEl = null;
             function showTyping() {
                 typingEl = document.createElement('div');
@@ -1217,6 +1068,61 @@
                 msgs.appendChild(typingEl);
                 scroll();
             }
-
             function removeTyping() {
-                if (typingEl && typingEl.parentNode) typingEl.parent
+                if (typingEl && typingEl.parentNode) typingEl.parentNode.removeChild(typingEl);
+                typingEl = null;
+            }
+            function scroll() { msgs.scrollTop = msgs.scrollHeight; }
+            function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+            function m(t, kw) { return kw.some(k => t.includes(k)); }
+            function getResponse(q) {
+                const t = q.toLowerCase();
+                if (m(t,['hello','hi','hey','howdy','good morning','good evening','good afternoon','sup']))
+                    return `Hello! 👋 I'm KodBot, your KodBank assistant. How can I help you today?<br><br>Ask me about your <strong>balance</strong>, <strong>transactions</strong>, <strong>card</strong>, <strong>loans</strong>, or <strong>transfers</strong>!`;
+                if (m(t,['balance','how much money','funds','available','my money','account balance']))
+                    return `💰 <strong>Your Current Balance</strong><br><br>Available Balance: <strong style="color:#A98448;">$12,458.75</strong><br>Account: Savings (XXXX XXXX 4589)<br>Status: Active ✅<br><br>You can also click <em>"Check Balance"</em> on the dashboard for a celebration! 🎉`;
+                if (m(t,['transaction','history','recent','spent','statement','activity','last','purchases']))
+                    return `📋 <strong>Your Recent Transactions</strong><br><br>🟢 <strong>+$4,200.00</strong> — Salary Credit (20 Feb)<br>🔴 <strong>−$1,200.00</strong> — Rent Payment (18 Feb)<br>🔴 <strong>−$349.99</strong> — Amazon Purchase (15 Feb)<br>🟢 <strong>+$89.50</strong> — Refund – Tech Store (12 Feb)<br>🔴 <strong>−$191.26</strong> — Electricity Bill (10 Feb)<br><br>Need a full statement? Visit the Statement section.`;
+                if (m(t,['card','debit card','visa','card number','card details','my card']))
+                    return `💳 <strong>Your Debit Card</strong><br><br>Card Number: XXXX XXXX XXXX 4589<br>Type: Visa Debit<br>Expiry: 08 / 2028<br>Network: Visa International<br>Status: <strong style="color:#A98448;">Active ✅</strong><br><br>Need to block or replace your card? Just ask!`;
+                if (m(t,['block','freeze','lock','stolen','lost card','suspend','disable card']))
+                    return `🔒 <strong>Card Block Request</strong><br><br>To block your card immediately:<br>1. Call <strong>1-800-KOD-BANK</strong> (24/7)<br>2. Visit your nearest KodBank branch<br>3. Mobile app → Card Settings → Block Card<br><br>⚠️ Once blocked, all transactions will be declined instantly.`;
+                if (m(t,['transfer','send money','wire','remittance','neft','imps','rtgs','send funds','move money']))
+                    return `↗️ <strong>Money Transfer</strong><br><br>Transfer types available:<br>• <strong>Within KodBank</strong> — Instant, free<br>• <strong>Other Banks</strong> — 1–2 business days<br>• <strong>International Wire</strong> — 3–5 business days<br><br>Daily limit: <strong>$50,000</strong>`;
+                if (m(t,['loan','borrow','mortgage','emi','personal loan','home loan','car loan']))
+                    return `🏦 <strong>KodBank Loan Products</strong><br><br>• <strong>Personal Loan</strong> — From 8.5% p.a. | Up to $100,000<br>• <strong>Home Loan</strong> — From 7.2% p.a. | Up to $1,000,000<br>• <strong>Car Loan</strong> — From 9.0% p.a. | Up to $75,000<br>• <strong>Education Loan</strong> — From 6.8% p.a.<br><br>Apply online or visit any KodBank branch.`;
+                if (m(t,['interest rate','fd','fixed deposit','savings rate','deposit rate','rd','recurring']))
+                    return `📈 <strong>KodBank Interest Rates</strong><br><br>🏦 <strong>Savings Account:</strong> 4.0% p.a.<br>📅 <strong>Fixed Deposit (1 yr):</strong> 6.5% p.a.<br>📅 <strong>Fixed Deposit (3 yr):</strong> 7.0% p.a.<br>🔁 <strong>Recurring Deposit:</strong> 6.8% p.a.<br><br>Rates last updated: Feb 2026.`;
+                if (m(t,['open account','new account','create account','zero balance']))
+                    return `🆕 <strong>Open a KodBank Account</strong><br><br>Documents required:<br>• Government-issued ID<br>• Proof of Address<br>• PAN Card / SSN<br>• Passport-size photograph<br><br>Open online in <strong>under 10 minutes!</strong>`;
+                if (m(t,['atm','branch','nearest','location','find branch','locate']))
+                    return `📍 <strong>Find KodBank Near You</strong><br><br>Branch/ATM locator: kodbank.com/locator<br>Helpline: <strong>1-800-KOD-BANK</strong> (24/7)<br><br>We have <strong>500+ branches</strong> and <strong>2,000+ ATMs</strong> nationwide.`;
+                if (m(t,['password','pin','forgot','reset','change password','unlock','otp']))
+                    return `🔑 <strong>Account Security</strong><br><br>To reset your password or PIN:<br>1. Click <em>"Forgot Password"</em> on the login page<br>2. Enter your registered email/phone<br>3. Verify via OTP<br>4. Set a new password<br><br>For PIN reset, visit any KodBank ATM or branch.`;
+                if (m(t,['cheque','checkbook','cheque book','chequebook','check book']))
+                    return `📒 <strong>Cheque Book Request</strong><br><br>Request via:<br>• Online: Dashboard → Services → Request Cheque Book<br>• Call: 1-800-KOD-BANK<br>• Branch visit<br><br>Delivery: <strong>5–7 business days</strong>. Free for Savings accounts.`;
+                if (m(t,['upi','online payment','net banking','internet banking','digital payment','qr','pay']))
+                    return `📱 <strong>Digital Payments at KodBank</strong><br><br>• <strong>UPI ID:</strong> yourname@kodbank<br>• <strong>Net Banking:</strong> Enabled by default<br>• <strong>Mobile App:</strong> iOS & Android<br>• <strong>QR Pay:</strong> Scan any UPI QR code<br><br>Daily UPI limit: $5,000`;
+                if (m(t,['complaint','problem','issue','help','support','contact','agent','human','representative','grievance']))
+                    return `🎧 <strong>KodBank Customer Support</strong><br><br>📞 <strong>Phone:</strong> 1-800-KOD-BANK (24/7)<br>📧 <strong>Email:</strong> support@kodbank.com<br>💬 <strong>Live Chat:</strong> kodbank.com/chat<br>🏢 <strong>Branch:</strong> Mon–Sat, 9AM–5PM<br><br>Average wait time: <strong>&lt; 2 minutes</strong>`;
+                if (m(t,['charges','fee','fees','penalty','minimum balance','maintenance','annual fee']))
+                    return `💼 <strong>KodBank Account Charges</strong><br><br>• <strong>Savings Account:</strong> Zero maintenance fee<br>• <strong>Minimum Balance:</strong> $500<br>• <strong>ATM:</strong> Free (first 5/month), $2 after<br>• <strong>NEFT/IMPS:</strong> Free via net banking<br>• <strong>DD/PO:</strong> $5 per instrument`;
+                if (m(t,['kyc','know your customer','verify','verification','pan','document','aadhar','id proof']))
+                    return `📄 <strong>KYC Verification</strong><br><br>Accepted documents:<br>✅ Passport<br>✅ Driver's License<br>✅ National ID / Aadhar<br>✅ PAN Card<br><br>Update KYC: Dashboard → Profile → Update KYC, or visit any branch.`;
+                if (m(t,['account number','account no','my account','ifsc','sort code']))
+                    return `🔢 <strong>Your Account Details</strong><br><br>Account Number: <strong>XXXX XXXX 4589</strong> (masked for security)<br>Account Type: Savings<br>Branch: Main Branch<br>Currency: USD`;
+                if (m(t,['thank','thanks','bye','goodbye','great','awesome','perfect','done']))
+                    return `You're welcome! 😊 It was a pleasure assisting you.<br><br>If you need anything else, I'm always here. Have a great day! 🌟<br><em>— KodBot, your KodBank AI assistant</em>`;
+                if (m(t,['who are you','what are you','your name','kodbot','what is kodbot']))
+                    return `🤖 I'm <strong>KodBot</strong> — KodBank's AI-powered virtual assistant!<br><br>I can help with:<br>• Balance & statements<br>• Card management & blocking<br>• Transfers & payments<br>• Loans & interest rates<br>• KYC, charges & support<br><br>Available 24/7! 🕐`;
+                const fallbacks = [
+                    `I'm not sure about that. Here's what I can help with:<br><br>💰 Balance &amp; Transactions<br>💳 Card Management<br>↗️ Transfers &amp; Payments<br>🏦 Loans &amp; Deposits<br>🎧 Customer Support<br><br>Could you rephrase, or would you like to speak to an agent?`,
+                    `For this specific matter, I'd recommend:<br><br>📞 Call us: <strong>1-800-KOD-BANK</strong><br>📧 Email: support@kodbank.com<br><br>Is there anything else I can help you with?`,
+                    `Could you provide a bit more detail? Or try asking about: <strong>balance</strong>, <strong>transactions</strong>, <strong>card</strong>, <strong>loans</strong>, or <strong>transfers</strong>.`
+                ];
+                return fallbacks[Math.floor(Math.random() * fallbacks.length)];
+            }
+        }());
+    </script>
+</body>
+</html>
